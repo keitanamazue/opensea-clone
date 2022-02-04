@@ -9,6 +9,7 @@ import { CgWebsite } from 'react-icons/cg'
 import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai'
 import { HiDotsVertical } from 'react-icons/hi'
 import NFTCard from '../../components/NFTCard'
+import NFTSchelton from '../../components/NFTSchelton'
 
 const style = {
   bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
@@ -39,6 +40,7 @@ const Collection = () => {
   const [collection, setCollection] = useState({})
   const [nfts, setNfts] = useState([])
   const [listings, setListings] = useState([])
+  const [loading, setLoading] = useState(true)
 
   //https://eth-rinkeby.alchemyapi.io/v2/EXVdmmmHrQ1RXNdSdRf9ZsLWPFx7IH6m
 
@@ -59,6 +61,7 @@ const Collection = () => {
       const nfts = await nftModule.getAll()
 
       setNfts(nfts)
+      setLoading(false)
     })()
   }, [nftModule])
 
@@ -94,7 +97,6 @@ const Collection = () => {
 
     const collectionData = await sanityClient.fetch(query)
 
-
     // the query returns 1 object inside of an array
     await setCollection(collectionData[0])
   }
@@ -102,7 +104,6 @@ const Collection = () => {
   useEffect(() => {
     fetchCollectionData()
   }, [collectionId])
-
 
   return (
     <div className="overflow-hidden bg-gray-900">
@@ -203,14 +204,20 @@ const Collection = () => {
         </div>
       </div>
       <div className="flex flex-wrap ">
-        {nfts.map((nftItem, id) => (
-          <NFTCard
-            key={id}
-            nftItem={nftItem}
-            title={collection?.title}
-            listings={listings}
-          />
-        ))}
+        {loading ? (
+          <NFTSchelton />
+        ) : (
+          <>
+            {nfts.map((nftItem, id) => (
+              <NFTCard
+                key={id}
+                nftItem={nftItem}
+                title={collection?.title}
+                listings={listings}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   )
