@@ -9,7 +9,7 @@ import ItemActivity from '../../components/nft/ItemActivity'
 import Purchase from '../../components/nft/Purchase'
 
 const style = {
-  wrapper: `flex flex-col items-center container-lg text-[#e5e8eb]`,
+  wrapper: `flex flex-col items-center container-lg text-[#e5e8eb] bg-black`,
   container: `container p-6`,
   topContent: `flex`,
   nftImgContainer: `flex-1 mr-4`,
@@ -53,7 +53,7 @@ const Nft = () => {
     )
 
     return sdk.getMarketplaceModule(
-      '0x8C0Ff9CDC03127dC93d779FE9eC6d558445950Fa'
+      '0xd56Aa80378Ce1b8A1f2BEAAce74C61d69d4f24Ec'
     )
   }, [provider])
 
